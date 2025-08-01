@@ -4,6 +4,8 @@ from langchain_experimental.agents import create_pandas_dataframe_agent
 from langchain.llms import OpenAI
 import os
 import plotly.express as px
+import textwrap
+
 
 st.set_page_config(page_title="AI-Powered Data Analyst", layout="wide")
 st.title("🤖 AI-Powered Data Analyst Assistant")
@@ -51,11 +53,21 @@ if uploaded_file is not None:
                 that creates the appropriate chart. The DataFrame is called 'df'.
                 Do NOT show the chart — just return the code to create the figure and assign it to a variable called 'fig'.
                 """
-                chart_code = llm(chart_prompt)
+              
+                raw_code = llm(chart_prompt)
+                chart_code = textwrap.dedent(raw_code).strip()
+                chart_code = chart_code.replace("return fig", "").replace("return", "")
 
                 try:
                     # Evaluate the generated code to produce the figure
-                    exec(chart_code, {'df': df, 'px': px})
-                    st.plotly_chart(locals()['fig'])
+                    st.subheader("🧠 Chart Code from GPT")
+                    st.code(chart_code, language="python")
+                    global_env = {'df': df, 'px': px}
+                    exec(chart_code, global_env)
+                    fig = global_env.get("fig")
+                    if fig:
+                        st.plotly_chart(fig)
+                    else:
+                        st.error("❌ No figure was created by the generated code.")
                 except Exception as e:
                     st.error(f"⚠️ Chart generation failed:\n\n{e}")
