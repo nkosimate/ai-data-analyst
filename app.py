@@ -3,6 +3,7 @@ import pandas as pd
 from langchain_experimental.agents import create_pandas_dataframe_agent
 from langchain.llms import OpenAI
 import os
+import plotly.express as px
 
 st.set_page_config(page_title="AI-Powered Data Analyst", layout="wide")
 st.title("🤖 AI-Powered Data Analyst Assistant")
@@ -32,3 +33,29 @@ if uploaded_file is not None:
                 response = agent.run(query)
                 st.success("✅ Done!")
                 st.markdown(response)
+
+        # Basic keyword-based chart trigger
+        chart_keywords = ["plot", "chart", "bar", "line", "histogram", "scatter"]
+        if any(word in query.lower() for word in chart_keywords):
+            with st.spinner("📊 Generating chart..."):
+
+                # Ask the LLM for a Python code snippet that creates the chart
+                chart_prompt = f"""
+                Given this pandas dataframe:
+
+                {df.head(3).to_markdown()}
+
+                And the user's request: "{query}",
+
+                Write a short Python code snippet using Plotly Express (imported as px)
+                that creates the appropriate chart. The DataFrame is called 'df'.
+                Do NOT show the chart — just return the code to create the figure and assign it to a variable called 'fig'.
+                """
+                chart_code = llm(chart_prompt)
+
+                try:
+                    # Evaluate the generated code to produce the figure
+                    exec(chart_code, {'df': df, 'px': px})
+                    st.plotly_chart(locals()['fig'])
+                except Exception as e:
+                    st.error(f"⚠️ Chart generation failed:\n\n{e}")
