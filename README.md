@@ -40,7 +40,7 @@ Tech                    Why we love it
 🐍 Python               The glue holding it all together
 
 📂 Getting Started
-git clone https://github.com/yourusername/ai-data-analyst.git
+git clone https://github.com/nkosimate/ai-data-analyst.git
 cd ai-data-analyst
 python3 -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
