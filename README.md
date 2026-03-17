@@ -1,80 +1,92 @@
-🤖 AI-Powered Data Analyst Assistant
+# AI Data Analyst
 
-Ever wished you had a data-savvy AI teammate who could instantly answer questions like:
+Ask questions about your CSV data in plain English. Get charts back.
 
-“What’s the churn rate by contract type?”
-“Plot average call duration per customer.”
-“Which features matter most for customer churn?”
+That's mostly it. No SQL, no Python, no pivot tables. You upload a file, type something like *"which states have the highest average charge?"*, and the assistant figures out what you meant and plots it.
 
-Welcome to your new data sidekick.
+Built with LangChain, OpenAI, Streamlit, and Plotly.
 
-Built with ❤️ using LangChain, OpenAI, Streamlit, and Plotly, this project turns CSV files into interactive, intelligent dashboards with natural language querying, automatic insights, and visualisations.
 
-⸻
+## What it can do
 
-🚀 Features
+- Answer questions about your data in natural language
+- Generate interactive Plotly charts on demand
+- Handle correlation questions, distributions, group comparisons, and basic trends
+- Keep your data local — nothing leaves your machine
 
-✨ Upload your CSV file — and the AI handles the rest
-🧠 Ask questions in plain English (no SQL, no code)
-📊 Automatically generate beautiful Plotly charts
-💬 Supports basic analysis, trends, correlations, and more
-🔒 Local-first: your data stays on your machine
-⚡️ Supercharged with OpenAI + LangChain agents
+It works best with clean tabular CSVs. The messier the data, the more it'll struggle, same as any analyst would.
 
-⸻
 
-🧪 Example Use Cases
-	•	“What percentage of customers churned last month?”
-	•	“Create a box plot of CustServCalls by Churn.”
-	•	“Show the top 5 states with the highest total charge.”
-	•	“What’s the correlation between call minutes and churn?”
+## Example questions
 
-⸻
+These are things I've tested against the telecom churn dataset:
 
-🛠️ Stack
-Tech                    Why we love it
-🧠 OpenAI               For powerful, conversational understanding
-🦜 LangChain            Orchestrates natural language to action
-📊 Plotly               Gorgeous interactive charts
-🌐 Streamlit            Fast, friendly UI for data apps
-🐍 Python               The glue holding it all together
+- *"What percentage of customers churned?"*
+- *"Create a box plot of customer service calls by churn status."*
+- *"Show the top 5 states by total charge."*
+- *"Is there a correlation between call minutes and churn?"*
 
-📂 Getting Started
+Your dataset will have different columns, but the assistant will read the schema and try to interpret your questions against it automatically.
+
+---
+
+## Stack
+
+| Tool | What it does |
+|------|-------------|
+| OpenAI | Understands your questions |
+| LangChain | Turns those questions into actions |
+| Plotly | Renders the charts |
+| Streamlit | The UI |
+| Python | Glue |
+
+---
+
+## Getting started
+
+```bash
 git clone https://github.com/nkosimate/ai-data-analyst.git
 cd ai-data-analyst
 python3 -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-Then create a .env file:
+Create a `.env` file in the root:
+
+```
 OPENAI_API_KEY=your-key-here
+```
 
-And finally:
+Then run it:
+
+```bash
 streamlit run app.py
-📁 Sample Dataset
+```
 
-I recommend starting with something like telecom_churn.csv from https://www.kaggle.com/datasets/barun2104/telecom-churn/data , but feel free to upload any tabular CSV. The assistant will do its best to interpret your data automatically!
+---
 
-⸻
+## Sample dataset
 
-🎯 Future Enhancements
-	•	✅ Natural language → SQL → insight queries
-	•	📈 Auto-generated data profiling summaries
-	•	💡 Smart visualisation suggestions
-	•	🔍 Drill-down insights and trends over time
-	•	🗂️ Multi-file support and memory
+I'd recommend starting with the [Telecom Churn dataset on Kaggle](https://www.kaggle.com/datasets/barun2104/telecom-churn/data). It's clean, well-structured, and most of the example questions above were written against it.
 
-⸻
+Any tabular CSV should work though. The assistant reads the column names and data types on upload.
 
-👨🏽‍💻 Made By
+---
 
-Built with curiosity and code by Nkosi Mate 👨🏽‍💻
-Powered by open source. Fuelled by coffee. ☕
+## What's next
 
-⸻
+A few things I want to add:
 
-⭐️ Star This Repo
+- Auto-generated data profile summaries on upload
+- Smarter chart type suggestions based on the question
+- Multi-file support
+- Memory across questions in a session
 
-If you like this project, please consider giving it a ⭐️!
-It helps others discover this fun and powerful tool.
+---
 
+## Made by
+
+[Nkosi Mate](https://github.com/nkosimate)
+
+If this is useful to you, a star helps other people find it.
