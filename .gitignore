@@ -1,1 +1,28 @@
-gitignore
+# Virtual environment
+venv/
+.venv/
+env/
+.env
+
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Uploaded data files
+*.csv
