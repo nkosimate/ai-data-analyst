@@ -1,11 +1,13 @@
 import streamlit as st
 import pandas as pd
 from langchain_experimental.agents import create_pandas_dataframe_agent
-from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 import os
 import plotly.express as px
 import textwrap
-
+from dotenv import load_dotenv
+ 
+load_dotenv()
 
 st.set_page_config(page_title="AI-Powered Data Analyst", layout="wide")
 st.title("🤖 AI-Powered Data Analyst Assistant")
