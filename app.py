@@ -6,7 +6,7 @@ import os
 import plotly.express as px
 import textwrap
 from dotenv import load_dotenv
- 
+
 load_dotenv()
 
 st.set_page_config(page_title="AI-Powered Data Analyst", layout="wide")
@@ -39,10 +39,27 @@ if uploaded_file is not None:
                 st.markdown(response)
 
         # Basic keyword-based chart trigger
-        chart_keywords = ["plot", "chart", "bar", "line", "histogram", "scatter"]
+        chart_keywords = ["plot", "chart", "bar", "line", "histogram", "scatter","correlation"]
         if any(word in query.lower() for word in chart_keywords):
             with st.spinner("📊 Generating chart..."):
 
+            # Special case: correlation heatmap
+             if "correlation" in query.lower():
+                numeric_df = df.select_dtypes(include='number')
+                if numeric_df.empty:
+                    st.warning("No numeric columns found to correlate.")
+                else:
+                    corr = numeric_df.corr()
+                    fig = px.imshow(
+                        corr,
+                        text_auto=".2f",
+                        color_continuous_scale="RdBu_r",
+                        zmin=-1, zmax=1,
+                        title="Correlation Heatmap"
+                    )
+                    st.plotly_chart(fig)
+
+             else:
                 # Ask the LLM for a Python code snippet that creates the chart
                 chart_prompt = f"""
                 Given this pandas dataframe:
