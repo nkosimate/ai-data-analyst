@@ -8,3 +8,4 @@ pandas
 python-dotenv
 tabulate
 matplotlib
+re

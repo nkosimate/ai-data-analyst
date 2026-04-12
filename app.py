@@ -5,6 +5,7 @@ from langchain_openai import OpenAI
 import os
 import plotly.express as px
 import textwrap
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -81,6 +82,13 @@ if uploaded_file is not None:
                 response_obj = llm.invoke(chart_prompt)
                 raw_code = response_obj if isinstance(response_obj, str) else response_obj.content
                 chart_code = textwrap.dedent(raw_code).strip()
+                # Remove ALL markdown code blocks (handles ```python, ``` and multiline safely)
+                chart_code = re.sub(r"```.*?```", lambda m: m.group(0).replace("```python", "").replace("```", ""), chart_code, flags=re.DOTALL)
+
+                # Extra safety cleanup (in case backticks remain)
+                chart_code = chart_code.replace("```python", "").replace("```", "")
+
+                chart_code = chart_code.strip()
                 chart_code = chart_code.replace("return fig", "").replace("return", "")
 
                 try:
