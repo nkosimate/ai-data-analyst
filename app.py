@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from langchain_experimental.agents import create_pandas_dataframe_agent
-from langchain_community.llms import OpenAI
+from langchain_openai import OpenAI
 import os
 import plotly.express as px
 import textwrap
@@ -78,7 +78,7 @@ if uploaded_file is not None:
                 Do NOT show the chart — just return the code to create the figure and assign it to a variable called 'fig'.
                 """
               
-                raw_code = llm(chart_prompt)
+                raw_code = llm.invoke(chart_prompt)
                 chart_code = textwrap.dedent(raw_code).strip()
                 chart_code = chart_code.replace("return fig", "").replace("return", "")
 
