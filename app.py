@@ -78,7 +78,8 @@ if uploaded_file is not None:
                 Do NOT show the chart — just return the code to create the figure and assign it to a variable called 'fig'.
                 """
               
-                raw_code = llm.invoke(chart_prompt)
+                response_obj = llm.invoke(chart_prompt)
+                raw_code = response_obj if isinstance(response_obj, str) else response_obj.content
                 chart_code = textwrap.dedent(raw_code).strip()
                 chart_code = chart_code.replace("return fig", "").replace("return", "")
 
